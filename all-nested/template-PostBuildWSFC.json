@@ -1,0 +1,91 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "vmName": {
+      "type": "string",
+      "metadata": {
+        "description": "Username for the Virtual Machine."
+      }
+    },
+    "numberOfInstances": {
+      "type": "int",
+      "defaultValue": 2,
+      "metadata": {
+        "Description": "Number of Azure VM to create."
+      }
+    },
+    "FailoverClusterName": {
+      "type": "string",
+      "defaultValue": "",
+      "metadata": {
+        "description": "First 10 char for the netbios name of the FailoverCluster. Runbook will append 5 more to ensure its unique and total must be less than 15."
+      }
+    },
+    "domainJoinUserName": {
+      "type": "string",
+      "minLength": 1,
+      "metadata": {
+        "description": "Account for domain joining. Example: redmond\\serviceaccount"
+      }
+    },
+    "domainJoinPassword": {
+      "type": "securestring",
+      "minLength": 1,
+      "metadata": {
+        "description": "Password for domain joining"
+      }
+    }
+  },
+  "variables": {
+    "branch": "develop",
+    "scriptsURL": "[concat('https://raw.githubusercontent.com/Microsoft/MSITARM/',variables('branch'),'/all-scripts/')]",
+    "nestedURL": "[concat('https://raw.githubusercontent.com/Microsoft/MSITARM/',variables('branch'),'/all-nested/')]",
+
+    "vmWSFCExtensionName": "WSFCCustomExtn",
+    "scriptFileName": "Configure-WSFC.ps1",
+    "unRegscriptFileName": "UnRegisterTask.ps1",
+    "schedulerScriptFileName": "Run-WSFCScheduler.ps1",
+    "ScriptFilePath": "[concat('./',variables('schedulerScriptFileName'))]",
+    "customWSFCScriptFileUri": "[concat(variables('scriptsURL'), '/', variables('ScriptFileName'))]",
+    "customWSFCSchedulerScriptFileUri": "[concat(variables('scriptsURL'), '/', variables('schedulerScriptFileName'))]",
+    "customWSFCunRegScriptFileUri": "[concat(variables('scriptsURL'), '/', variables('unRegscriptFileName'))]",
+    "scriptParameters": "[concat('-VMName ', parameters('vmName'), ' -InstanceCount \"', parameters('numberOfInstances'), '\" -ClusterName ', parameters('FailoverClusterName'),' -domainUserName  ',parameters('domainJoinUserName'),' -domainUserPWD  ',parameters('domainJoinPassword'),' -scriptFileName  ',variables('scriptFileName'))]",
+    "WSFCcommandToExecute": "[concat('powershell -ExecutionPolicy Unrestricted -File ', variables('ScriptFilePath'), ' ', variables('scriptParameters'))]"
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Compute/virtualMachines/extensions",
+      "name": "[concat(parameters('vmName'),'/',variables('vmWSFCExtensionName'))]",
+      "apiVersion": "2015-06-15",
+      "location": "[resourceGroup().location]",
+      "properties": {
+        "publisher": "Microsoft.Compute",
+        "type": "CustomScriptExtension",
+        "typeHandlerVersion": "1.8",
+        "autoUpgradeMinorVersion": true,
+        "settings": {
+          "fileUris": [
+            "[variables('customWSFCScriptFileUri')]",
+            "[variables('customWSFCSchedulerScriptFileUri')]",
+            "[variables('customWSFCunRegScriptFileUri')]"
+
+          ]
+        },
+        "protectedSettings": {
+          "commandToExecute": "[variables('WSFCcommandToExecute')]"
+        }
+      }
+    }
+  ],
+  "outputs": {
+    "commandToExecute": {
+      "type": "string",
+      "value": "[variables('WSFCcommandToExecute')]"
+    },
+    "fileURI": {
+      "type": "string",
+      "value": "[variables('customWSFCScriptFileUri')]"
+    }
+  }
+}
