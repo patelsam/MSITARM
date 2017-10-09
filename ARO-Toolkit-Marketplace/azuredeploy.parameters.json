@@ -1,0 +1,45 @@
+﻿{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "bootStrapExecuteGuid": {
+            "value": "dfbb170a-df7c-49d8-a73f-79a7a2563487"
+        },
+		"startRunbookScheduleJobGuidValue" :{
+		      "value": "e106bc51-5e00-4cff-83fd-585d6ed2c2de"
+		},
+		"stopRunbookScheduleJobGuidValue" : {
+		     "value": "19a2133a-61ce-40d9-8b21-8f77e0857e93"
+		},
+		"bootStrapGuid": {
+            "value": "4c0800a2-a6d2-425e-99c8-f810ab583564"
+        },
+        "workspaceName": {
+            "value": "JayaAROToolKit-88"
+        },
+        "accountName": {
+            "value": "JayaAROToolKit-88"
+        },
+		"workspaceRegionId": {
+            "value": "East US"
+        },
+		"regionId": {
+            "value": "East US 2"
+        },
+        "pricingTier" : {
+	        "value" : "OMS"
+		},
+		"Daily Start Time" : {
+		   "value" : "6:00 PM"
+		},
+		"Daily Stop Time" : {
+		   "value" : "6:00 PM"
+		},
+        "sendgridPassword": {
+		  "value": "0064269c-baaf-4eed-8350-05b1e1ef3534"
+		},
+		"Email Addresses": {
+		    "value":"jasrik@microsoft.com"
+		}
+    }
+}

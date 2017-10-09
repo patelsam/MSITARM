@@ -1,0 +1,93 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+  "parameters": {
+    "vmName": {
+      "value": "trworthenc02"
+    },
+    "localAdminUserName": {
+      "value": "ITSVC0"
+    },
+    "localAdminPassword": {
+      "value": "!P@sswordN0w"
+    },
+    "domainJoinUserName": {
+      "value": "redmond\\cptarm"
+    },
+    "domainJoinPassword": {
+      "value": "Ten10Ten10"
+    },
+    "localAdmins": {
+      "value": "redmond\\itcmpprd,redmond\\cptarm,redmond\\cptteamb,redmond\\cptteama"
+    },
+    "CiOwner": {
+      "value": "cptarm"
+    },
+    "CiAnalystGroup": {
+      "value": "Config Analysts: EIS - CloudMS - Cloud Platform Tools - Cloud Platform Tools Eng"
+    },
+    "appID": {
+      "value": "ICTO-5889"
+    },
+    "orgID": {
+      "value": "500084"
+    },
+    "domainname": {
+      "value": "redmond.corp.microsoft.com"
+    },
+    "Oupath": {
+      "value": "OU=CloudMSVMs,OU=ITManaged,OU=ITServices,DC=redmond,DC=corp,DC=microsoft,DC=com"
+    },
+    "env": {
+      "value": "dev"
+    },
+    "imagePublisher": {
+      "value": "MicrosoftWindowsServer"
+    },
+    "imageOffer": {
+      "value": "WindowsServer"
+    },
+    "sku": {
+      "value": "2012-R2-Datacenter"
+    },
+    "virtualNetwork": {
+      "value": "CPTARM-CORP-EUS2-VNET-1"
+    },
+    "vnetResourceGroup": {
+      "value": "ERNetwork"
+    },
+    "subnetName": {
+      "value": "Subnet-1"
+    },
+    "StorageAccountType": {
+      "value": "Standard_LRS"
+    },
+    "vmSize": {
+      "value": "Standard_DS4_V2"
+    },
+    "Diskconfig": {
+      "value": "Win"
+    },
+    "DiskSize": {
+      "value": 200
+    },
+    "DiskCount": {
+      "value": "1"
+    },
+    "AzureDiskEncryption": {
+      "value": "No"
+    },
+    "clientid": {
+      "value": ""
+    },
+    "clientsecret": {
+      "value": ""
+    },
+    "PullServerRegistrationKey": {
+      "value": "DtOvyfhxbRkS+kXw9PerJP4RQx48HxCcvKruEyd/vfz2gKplxr+UtJDpsdBjltyDhhMa5As4OGKFb3M+p5vlbQ=="
+    },
+    "PullServerRegistrationURI": {
+      "value": "https://eus2-agentservice-prod-1.azure-automation.net/accounts/d9886cc8-9990-4461-972b-155d710f1ace"
+    }
+  }
+}
